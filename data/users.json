@@ -1,0 +1,47 @@
+[
+    {
+        "id": 2115,
+        "name": "Jhon",
+        "lastname": "Connor",
+        "date_1": "1981-03-26",
+        "date_2": "2009-11-14",
+        "gender": "Male",
+        "isAdmin": false
+    },
+    {
+        "id": 8820,
+        "name": "Mila",
+        "lastname": "Dukakis",
+        "date_1": "1973-11-06",
+        "date_2": "2011-10-21",
+        "gender": "Female",
+        "isAdmin": true
+    },
+    {
+        "id": 7823,
+        "name": "Lianna",
+        "lastname": "Mormont",
+        "date_1": "2005-04-12",
+        "date_2": "2016-01-09",
+        "gender": "Female",
+        "isAdmin": false
+    },
+    {
+        "id": 7820,
+        "name": "John",
+        "lastname": "Smith",
+        "date_1": "1978-06-05",
+        "date_2": "1996-11-12",
+        "gender": "Male",
+        "isAdmin": false
+    },
+    {
+        "id": 1542,
+        "name": "Gabriel",
+        "lastname": "Ferran",
+        "date_1": "1968-03-14",
+        "date_2": "1998-01-27",
+        "gender": "Male",
+        "isAdmin": true
+    }
+]

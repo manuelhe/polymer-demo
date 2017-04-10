@@ -1,0 +1,57 @@
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<dom-module id="my-app">
+  <template>
+    <!-- app-location binds to the app's URL -->
+    <app-location use-hash-as-path route="{{route}}"></app-location>
+
+    <!-- this app-route manages the top-level routes -->
+    <app-route
+      route="{{route}}"
+      pattern="/:page"
+      data="{{routeData}}"
+      tail="{{subroute}}"></app-route>
+
+    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="not-found" role="main">
+      <people-page name="people-page" route="{{subroute}}"></people-page>
+      <people-details-page name="people-details-page" route="{{subroute}}"></people-details-page>
+    </iron-pages>
+
+    <ul>
+      <li><a href="#/">Back to main page</a></li>
+      <li><a href="#/people-page/">People page</a></li>
+      <li><a href="#/people-details-page/">People details page</a></li>
+    </ul>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'my-app',
+      properties: {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged'
+        },
+        storedUser: Object
+      },
+      observers: [
+        '_routePageChanged(routeData.page)'
+      ],
+      _routePageChanged: function(page) {
+        this.page = page || 'people-page';
+      },
+      _pageChanged: function(page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl('pages/' + page + '.html');
+        this.importHref(resolvedPageUrl, null, this._showPage404, true);
+      },
+
+      _showPage404: function() {
+        this.page = 'not-found';
+      }
+    });
+  </script>
+</dom-module>

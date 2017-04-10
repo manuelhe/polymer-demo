@@ -1,0 +1,23 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../components/results-table.html">
+
+<dom-module id="people-page">
+  <template>
+
+    <h3>{{ title }}</h3>
+    <results-table></results-table>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'people-page',
+      properties: {
+        title: {
+          type: String,
+          value: 'People list'
+        }
+      }
+    });
+  </script>
+</dom-module>

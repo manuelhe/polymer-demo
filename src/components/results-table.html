@@ -1,0 +1,110 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="results-table">
+<template>
+    <style>
+        table {
+           width: 100%;
+        }
+        th {
+            background: #999;
+            color: #fff;
+            padding: 3px;
+            text-align: left;
+        }
+        td {
+            border: 1px solid #eee;
+        }
+        tr:nth-child(2n) td{
+            background: #eee;
+        }
+        .center {
+            text-align:center;
+        }
+        .icon {
+            --iron-icon-fill-color: #555;
+        }
+        .icon-admin {
+            --iron-icon-fill-color: #55b;
+        }
+    </style>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha 1</th>
+                <th>Fecha 2</th>
+                <th>Sexo</th>
+                <th>Admin</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template is="dom-repeat" items="{{people}}">
+                <tr>
+                    <td><span>[[item.id]]</span></td>
+                    <td><span>{{item.name}}</span></td>
+                    <td><span>{{item.lastname}}</span></td>
+                    <td><span>{{item.date_1}}</span></td>
+                    <td><span>{{item.date_2}}</span></td>
+                    <td><span>{{item.gender}}</span></td>
+                    <td class="center">
+                        <iron-icon icon="thumb-up" class='icon-admin' hidden$="{{!item.isAdmin}}"></iron-icon>
+                        <iron-icon icon="thumb-down" class="icon" hidden$="{{item.isAdmin}}"></iron-icon>
+                    </td>
+                    <td>
+                        <button type="button" on-tap="goToEdit">Edit</button>
+                        <button type="button" on-tap="deleteItem">Delete</button>
+                    </td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+    <button type="button" on-tap="goToEdit">Add new item</button>
+
+    <iron-ajax
+        id="requestRepos"
+        url="/data/users.json"
+        handle-as="json"
+        on-response="handleResponse"></iron-ajax>
+  </template>
+
+  <script>
+    Polymer({
+        is: 'results-table',
+        parameters: {
+            people: {
+                type: Array
+            }
+        },
+        goToEdit: function (e) {
+            let index = (e.model && e.model.get('item.id')) || '';
+            window.location = '#/people-details-page/' + index;
+        },
+        deleteItem: function (e) {
+            let index = (e.model && e.model.get('item.id')) || false;
+            if (index === false) {
+                return;
+            }
+            let message = 'Are you sure you want to remove user ' +
+                           e.model.get('item.name') + ' ' +
+                           e.model.get('item.lastname') + '?';
+            if (window.confirm(message)) {
+                this.people = this.people.filter(function (item) {
+                    return item.id !== index;
+                });
+            }
+        },
+        handleResponse: function (data) {
+            this.people = data.detail.response;
+        },
+        ready: function () {
+            this.$.requestRepos.generateRequest();
+        }
+    });
+  </script>
+</dom-module>

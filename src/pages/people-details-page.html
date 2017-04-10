@@ -1,0 +1,31 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../components/edit-form.html">
+
+<dom-module id="people-details-page">
+  <template>
+    <app-route
+      route="{{route}}"
+      pattern="/:id"
+      data="{{routeData}}"></app-route>
+
+    <h3>{{ title }}</h3>
+
+    <div>User ID: {{ routeData.id }}</div>
+
+    <edit-form userid="[[routeData.id]]"></edit-form>
+
+  </template>
+
+  <script>
+    Polymer({
+        is: 'people-details-page',
+            properties: {
+            title: {
+              type: String,
+              value: 'People details'
+            }
+        }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,21 @@
+{
+  "name": "icon-toggle",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Polymer/element-tutorial",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.8.1",
+    "iron-icon": "PolymerElements/iron-icon#^1.0.0",
+    "iron-icons": "PolymerElements/iron-icons#^1.0.0",
+    "iron-ajax": "^1.4.3",
+    "iron-pages": "^1.0.8",
+    "app-route": "PolymerElements/app-route#^0.9.3"
+  }
+}

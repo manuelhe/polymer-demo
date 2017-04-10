@@ -1,0 +1,68 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="edit-form">
+    <template>
+        <form method="post" action="./#/people-details-page/">
+            <label for="name">
+                <span>Nombre</span>
+                <input type="text" name="name" id="name" value="{{user.name}}" required>
+            </label>
+            <br>
+            <label for="lastname">
+                <span>Apellido</span>
+                <input type="text" name="lastname" id="lastname" value="{{user.lastname}}" required>
+            </label>
+            <br>
+            <label for="date_1">
+                <span>Fecha 1</span>
+                <input type="text" name="date_1" id="date_1" value="{{user.date_1}}" required>
+            </label>
+            <br>
+            <label for="date_2">
+                <span>Fecha 2</span>
+                <input type="text" name="date_2" id="date_2" value="{{user.date_2}}" required>
+            </label>
+            <br>
+            <label for="gender">
+                <span>Sexo</span>
+                <input type="text" name="gender" id="gender" value="{{user.gender}}" required>
+            </label>
+            <br>
+            <label for="isadmin">
+                <span>Admin</span>
+                <input type="text" name="isadmin" id="isadmin" value="{{user.isAdmin}}" required>
+            </label>
+            <br>
+        </form>
+        <iron-ajax
+            id="requestRepos"
+            url="/data/user.json"
+            handle-as="json"
+            on-response="handleResponse"></iron-ajax>
+    </template>
+    <script>
+        Polymer({
+            is: 'edit-form',
+            properties: {
+                user: {
+                    type: Object
+                },
+                userid: {
+                    type: Number,
+                    value: 0,
+                    observer: '_userIdChanged'
+                }
+            },
+            _userIdChanged: function (value, oldValue) {
+                if (value) {
+                    this.$.requestRepos.generateRequest();
+                }
+            },
+            handleResponse: function (data) {
+                this.user = data.detail.response;
+            }
+        });
+    </script>
+</dom-module>
