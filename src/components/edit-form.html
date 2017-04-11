@@ -30,31 +30,26 @@
             <br>
         </form>
         <iron-ajax
+            auto
             id="requestRepos"
-            url="/data/user.json"
+            url="{{getUrl}}"
             handle-as="json"
-            on-response="handleResponse"></iron-ajax>
+            last-response="{{user}}"></iron-ajax>
     </template>
     <script>
         Polymer({
             is: 'edit-form',
             properties: {
-                user: {
-                    type: Object
-                },
                 userid: {
-                    type: Number,
-                    value: 0,
-                    observer: '_userIdChanged'
+                    value: '',
+                    notify: true
+                },
+                getUrl: {
+                    computed: 'computeGetUrl(userid)'
                 }
             },
-            _userIdChanged: function (value, oldValue) {
-                if (value) {
-                    this.$.requestRepos.generateRequest();
-                }
-            },
-            handleResponse: function (data) {
-                this.user = data.detail.response;
+            computeGetUrl: function (userid) {
+                return '/data/user.json' + '?' + userid;
             }
         });
     </script>
