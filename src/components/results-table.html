@@ -67,20 +67,16 @@
     <button type="button" on-tap="goToEdit">Add new item</button>
 
     <iron-ajax
+        auto
         id="requestRepos"
         url="/data/users.json"
         handle-as="json"
-        on-response="handleResponse"></iron-ajax>
+        last-response="{{people}}"></iron-ajax>
   </template>
 
   <script>
     Polymer({
         is: 'results-table',
-        parameters: {
-            people: {
-                type: Array
-            }
-        },
         goToEdit: function (e) {
             let index = (e.model && e.model.get('item.id')) || '';
             window.location = '#/people-details-page/' + index;
@@ -98,12 +94,6 @@
                     return item.id !== index;
                 });
             }
-        },
-        handleResponse: function (data) {
-            this.people = data.detail.response;
-        },
-        ready: function () {
-            this.$.requestRepos.generateRequest();
         }
     });
   </script>
