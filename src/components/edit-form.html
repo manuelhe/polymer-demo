@@ -13,21 +13,24 @@
             <br>
             <label for="lastname">
                 <span>Apellido</span>
-                <input type="text" name="lastname" id="lastname" value="{{user.lastname}}" required>
+                <input type="text" name="lastname" id="lastname" value="{{user.lastname}}">
             </label>
             <br>
             <dates-selector date1$="{{user.date_1}}" date2$="{{user.date_2}}"></dates-selector>
+            <input type="hidden" name="date_1" value="[[date1]]">
+            <input type="hidden" name="date_2" value="[[date2]]">
             <br>
             <label for="gender">
                 <span>Sexo</span>
-                <input type="text" name="gender" id="gender" value="{{user.gender}}" required>
+                <input type="text" name="gender" id="gender" value="{{user.gender}}">
             </label>
             <br>
             <label for="isadmin">
                 <span>Admin</span>
-                <input type="text" name="isadmin" id="isadmin" value="{{user.isAdmin}}" required>
+                <input type="text" name="isadmin" id="isadmin" value="{{user.isAdmin}}">
             </label>
             <br>
+            <button type="button" hidden$="[[invalidForm]]">Save</button>
         </form>
         <iron-ajax
             auto
@@ -46,10 +49,23 @@
                 },
                 getUrl: {
                     computed: 'computeGetUrl(userid)'
+                },
+                invalidForm: {
+                    type: Boolean,
+                    value: false
                 }
             },
             computeGetUrl: function (userid) {
-                return '/data/user.json' + '?' + userid;
+                return '/data/' +  userid + '-user.json';
+            },
+            listeners: {
+                'input': '_inputValidation'
+            },
+            _inputValidation: function (e) {
+                this.invalidForm = false;
+                if (!e.target.value) {
+                    this.invalidForm = true;
+                }
             }
         });
     </script>
