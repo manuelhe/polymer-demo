@@ -1,18 +1,37 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <dom-module id="dates-selector">
+   <style>
+       .error {
+           color: #d33;
+           float: right;
+       }
+   </style>
     <template>
             <label for="date_1">
                 <span>Fecha 1</span>
-                <input type="text" name="date_1" id="date_1" value="{{date1}}" required>
+                <input type="text" name="date_1" id="date_1" value="{{date1::input}}" required>
             </label>
             <br>
             <label for="date_2">
                 <span>Fecha 2</span>
-                <input type="text" name="date_2" id="date_2" value="{{date2}}" required>
+                <input type="text" name="date_2" id="date_2" value="{{date2::input}}" required>
             </label>
+            <div class="error">[[errorMessage]]</div>
     </template>
     <script>
+        function isValidDate(dateString) {
+          var regEx = /^\d{4}-\d{2}-\d{2}$/;
+          if (!dateString.match(regEx)){
+            return false;
+          }
+          var d;
+          if (!((d = new Date(dateString))|0)) {
+            return false;
+          }
+          return d.toISOString().slice(0,10) == dateString;
+        }
+
         Polymer({
             is: 'dates-selector',
             properties: {
@@ -21,7 +40,27 @@
                 },
                 date2: {
                     type: String
+                },
+                errorMessage: {
+                    type: String,
+                    value: ''
                 }
+            },
+            listeners: {
+                'input': '_datesChanged'
+            },
+            _datesChanged: function () {
+                if (!(isValidDate(this.date1) && isValidDate(this.date2))) {
+                    this.errorMessage = 'Formato de fechas incorrecto (YYYY-MM-DD)';
+                    return;
+                }
+                let date1 = new Date(this.date1),
+                    date2 = new Date(this.date2);
+                if (date1.getTime() > date2.getTime()) {
+                    this.errorMessage = 'Fecha 2 debe ser mayor a Fecha 1';
+                    return;
+                }
+                this.errorMessage = '';
             }
         });
     </script>
