@@ -1,6 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../components/dates-selector.html">
 
 <dom-module id="edit-form">
     <template>
@@ -15,15 +16,7 @@
                 <input type="text" name="lastname" id="lastname" value="{{user.lastname}}" required>
             </label>
             <br>
-            <label for="date_1">
-                <span>Fecha 1</span>
-                <input type="text" name="date_1" id="date_1" value="{{user.date_1}}" required>
-            </label>
-            <br>
-            <label for="date_2">
-                <span>Fecha 2</span>
-                <input type="text" name="date_2" id="date_2" value="{{user.date_2}}" required>
-            </label>
+            <dates-selector date1$="{{user.date_1}}" date2$="{{user.date_2}}"></dates-selector>
             <br>
             <label for="gender">
                 <span>Sexo</span>
