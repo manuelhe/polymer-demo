@@ -1,0 +1,9 @@
+{
+        "id": 2115,
+        "name": "Jhon",
+        "lastname": "Connor",
+        "date_1": "1981-03-26",
+        "date_2": "2009-11-14",
+        "gender": "Male",
+        "isAdmin": false
+    }
