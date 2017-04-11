@@ -10,12 +10,12 @@
     <template>
             <label for="date_1">
                 <span>Fecha 1</span>
-                <input type="text" name="date_1" id="date_1" value="{{date1::input}}" required>
+                <input type="text" name="date_1" id="date_1" value="{{date1::input}}">
             </label>
             <br>
             <label for="date_2">
                 <span>Fecha 2</span>
-                <input type="text" name="date_2" id="date_2" value="{{date2::input}}" required>
+                <input type="text" name="date_2" id="date_2" value="{{date2::input}}">
             </label>
             <div class="error">[[errorMessage]]</div>
     </template>
@@ -36,10 +36,12 @@
             is: 'dates-selector',
             properties: {
                 date1: {
-                    type: String
+                    type: String,
+                    notify: true
                 },
                 date2: {
-                    type: String
+                    type: String,
+                    notify: true
                 },
                 errorMessage: {
                     type: String,
