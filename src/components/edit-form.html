@@ -4,33 +4,41 @@
 <link rel="import" href="../components/dates-selector.html">
 
 <dom-module id="edit-form">
+    <style>
+       .error {
+           color: #d33;
+       }
+    </style>
     <template>
-        <form method="post" action="./#/people-details-page/">
+        <form>
             <label for="name">
                 <span>Nombre</span>
-                <input type="text" name="name" id="name" value="{{user.name}}" required>
+                <input type="text" name="name" id="name" value="{{user.name::input}}" required>
             </label>
             <br>
             <label for="lastname">
                 <span>Apellido</span>
-                <input type="text" name="lastname" id="lastname" value="{{user.lastname}}">
+                <input type="text" name="lastname" id="lastname" value="{{user.lastname::input}}">
             </label>
             <br>
             <dates-selector date1$="{{user.date_1}}" date2$="{{user.date_2}}"></dates-selector>
-            <input type="hidden" name="date_1" value="[[date1]]">
-            <input type="hidden" name="date_2" value="[[date2]]">
+            <input type="hidden" name="date_1" value="{{user.date1::input}}">
+            <input type="hidden" name="date_2" value="{{user.date2::input}}">
             <br>
             <label for="gender">
                 <span>Sexo</span>
-                <input type="text" name="gender" id="gender" value="{{user.gender}}">
+                <input type="text" name="gender" id="gender" value="{{user.gender::input}}">
             </label>
             <br>
             <label for="isadmin">
                 <span>Admin</span>
-                <input type="text" name="isadmin" id="isadmin" value="{{user.isAdmin}}">
+                <input type="text" name="isadmin" id="isadmin" value="{{user.isAdmin::input}}">
             </label>
             <br>
-            <button type="button" hidden$="[[invalidForm]]">Save</button>
+            <div class="error" hidden$="[[!invalidForm]]">Todos los campos son requeridos</div>
+            <button type="button"
+                    on-tap="_submitForm"
+                    hidden$="[[invalidForm]]">Save</button>
         </form>
         <iron-ajax
             auto
@@ -66,6 +74,9 @@
                 if (!e.target.value) {
                     this.invalidForm = true;
                 }
+            },
+            _submitForm: function () {
+                console.log(this.user);
             }
         });
     </script>
